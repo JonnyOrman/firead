@@ -24,5 +24,7 @@ func NewDocumentRequestHandler[TDocument any, TId any](
 func (this DocumentRequestHandler[TDocument, TId]) Handle(ginContext *gin.Context) {
 	id := this.paramReader.Read(ginContext)
 
-	this.documentReader.Read(id) //TODO - return document
+	document := this.documentReader.Read(id)
+
+	ginContext.JSON(200, document)
 }
