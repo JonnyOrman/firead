@@ -20,13 +20,15 @@ func NewStringIdDataRetriever(configuration fireworks.Configuration) *StringIdDa
 }
 
 func (this StringIdDataRetriever) Retrieve(id string) map[string]interface{} {
-	client, _ := firestore.NewClient(context.Background(), this.configuration.ProjectID)
+	ctx := context.Background()
+
+	client, _ := firestore.NewClient(ctx, this.configuration.ProjectID)
 
 	defer client.Close()
 
 	collection := client.Collection(this.configuration.CollectionName)
 
-	snapshot, _ := collection.Doc(id).Get(context.Background())
+	snapshot, _ := collection.Doc(id).Get(ctx)
 
 	data := snapshot.Data()
 
