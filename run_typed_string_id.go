@@ -1,9 +1,11 @@
 package firead
 
+import "github.com/jonnyorman/fireworks"
+
 func RunTypeStringId[TDocument any]() {
 	idReader := StringIdReader{}
 
-	configuration := GenerateConfiguration()
+	configuration := fireworks.GenerateConfiguration("firead-config")
 
 	stringIdDataRetriever := NewStringIdDataRetriever(configuration)
 

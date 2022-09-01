@@ -9,7 +9,9 @@ func BuildApplication[TDocument any, TId Id](
 
 	requestHandler := NewDocumentRequestHandler[TDocument, TId](idReader, documentReader)
 
-	routerBuilder := NewGinRouterBuilder[TDocument](requestHandler)
+	routerBuilder := fireworks.NewGinRouterBuilder()
+
+	routerBuilder.AddGet("/:id", requestHandler.Handle)
 
 	router := routerBuilder.Build()
 
