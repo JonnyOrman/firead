@@ -2,6 +2,7 @@ package firead
 
 import (
 	"context"
+	"strconv"
 
 	"cloud.google.com/go/firestore"
 	"github.com/jonnyorman/fireworks"
@@ -26,7 +27,9 @@ func (this IntIdDataRetriever) Retrieve(id int) map[string]interface{} {
 
 	collection := client.Collection(this.configuration.CollectionName)
 
-	snapshot, _ := collection.Doc(string(id)).Get(context.Background())
+	idString := strconv.Itoa(id)
+
+	snapshot, _ := collection.Doc(idString).Get(context.Background())
 
 	data := snapshot.Data()
 
