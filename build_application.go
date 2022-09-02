@@ -7,7 +7,12 @@ func BuildApplication[TDocument any, TId Id](
 	dataRetriever DataRetriever[TId]) *fireworks.Application {
 	documentReader := NewFirestoreDocumentReader[TDocument](dataRetriever)
 
-	requestHandler := NewDocumentRequestHandler[TDocument, TId](idReader, documentReader)
+	responseWriter := NewJsonResponseWriter()
+
+	requestHandler := NewDocumentRequestHandler[TDocument, TId](
+		idReader,
+		documentReader,
+		responseWriter)
 
 	routerBuilder := fireworks.NewGinRouterBuilder()
 

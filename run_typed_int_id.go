@@ -7,9 +7,11 @@ func RunTypeIntId[TDocument any]() {
 
 	configuration := fireworks.GenerateConfiguration("firead-config")
 
-	intIdDataRetriever := NewIntIdDataRetriever(configuration)
+	snapshotRetriever := NewIntIdSnapshotRetriever(configuration)
+
+	dataRetriever := NewFirestoreDataRetriever[int](configuration, snapshotRetriever)
 
 	RunTyped[TDocument, int](
 		idReader,
-		intIdDataRetriever)
+		dataRetriever)
 }
