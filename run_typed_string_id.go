@@ -2,7 +2,7 @@ package firead
 
 import "github.com/jonnyorman/fireworks"
 
-func RunTypeStringId[TDocument any]() {
+func RunTypedStringId[TDocument any]() {
 	idReader := StringIdReader{}
 
 	configuration := fireworks.GenerateConfiguration("firead-config")

@@ -1,5 +1,5 @@
 package firead
 
 func RunIntId() {
-	RunTypeIntId[map[string]interface{}]()
+	RunTypedIntId[map[string]interface{}]()
 }
