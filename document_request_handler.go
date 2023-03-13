@@ -2,22 +2,22 @@ package firead
 
 import "github.com/gin-gonic/gin"
 
-type DocumentRequestHandler[TDocument any, TId any] struct {
-	paramReader    ParamReader[TId]
-	documentReader DocumentReader[TDocument, TId]
-	responseWriter ResponseWriter
+type DocumentRequestHandler[TDocument any, TId Id] struct {
+	paramReader      ParamReader[TId]
+	responseResolver ResponseResolver[TId]
+	responseWriter   ResponseWriter
 }
 
-func NewDocumentRequestHandler[TDocument any, TId any](
+func NewDocumentRequestHandler[TDocument any, TId Id](
 
 	paramReader ParamReader[TId],
-	documentReader DocumentReader[TDocument, TId],
+	responseResolver ResponseResolver[TId],
 	responseSetter ResponseWriter,
 ) *DocumentRequestHandler[TDocument, TId] {
 	this := new(DocumentRequestHandler[TDocument, TId])
 
 	this.paramReader = paramReader
-	this.documentReader = documentReader
+	this.responseResolver = responseResolver
 	this.responseWriter = responseSetter
 
 	return this
@@ -26,8 +26,7 @@ func NewDocumentRequestHandler[TDocument any, TId any](
 func (this DocumentRequestHandler[TDocument, TId]) Handle(ginContext *gin.Context) {
 	id := this.paramReader.Read(ginContext)
 
-	document := this.documentReader.Read(id)
+	code, body := this.responseResolver.Resolve(id)
 
-	//ginContext.JSON(200, document)
-	this.responseWriter.Write(ginContext, 200, document)
+	this.responseWriter.Write(ginContext, code, body)
 }

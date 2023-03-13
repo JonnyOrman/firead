@@ -12,9 +12,9 @@ func RunTypedStringId[TDocument any]() {
 
 	snapshotRetriever := NewStringIdSnapshotRetriever(configuration)
 
-	dataRetriever := firead.NewFirestoreDataRetriever[string](configuration, snapshotRetriever)
-
 	firead.RunTyped[TDocument, string](
 		idReader,
-		dataRetriever)
+		snapshotRetriever,
+		&configuration,
+	)
 }

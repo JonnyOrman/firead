@@ -1,11 +1,17 @@
 package firead
 
+import "github.com/jonnyorman/fireworks"
+
 func RunTyped[TDocument any, TId Id](
 	idReader ParamReader[TId],
-	dataRetriever DataRetriever[TId]) {
+	snapshotRetriever SnapshotRetriever[TId],
+	configuration *fireworks.Configuration,
+) {
 	application := BuildApplication[TDocument](
 		idReader,
-		dataRetriever)
+		snapshotRetriever,
+		configuration,
+	)
 
 	application.Run()
 }
