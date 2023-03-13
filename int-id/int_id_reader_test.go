@@ -1,4 +1,4 @@
-package firead
+package intid
 
 import (
 	"testing"

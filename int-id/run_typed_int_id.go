@@ -1,6 +1,9 @@
-package firead
+package intid
 
-import "github.com/jonnyorman/fireworks"
+import (
+	"github.com/jonnyorman/firead"
+	"github.com/jonnyorman/fireworks"
+)
 
 func RunTypedIntId[TDocument any]() {
 	idReader := IntIdReader{}
@@ -9,9 +12,9 @@ func RunTypedIntId[TDocument any]() {
 
 	snapshotRetriever := NewIntIdSnapshotRetriever(configuration)
 
-	dataRetriever := NewFirestoreDataRetriever[int](configuration, snapshotRetriever)
+	dataRetriever := firead.NewFirestoreDataRetriever[int](configuration, snapshotRetriever)
 
-	RunTyped[TDocument, int](
+	firead.RunTyped[TDocument, int](
 		idReader,
 		dataRetriever)
 }

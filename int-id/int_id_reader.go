@@ -1,6 +1,10 @@
-package firead
+package intid
 
-import "strconv"
+import (
+	"strconv"
+
+	"github.com/jonnyorman/firead"
+)
 
 type IntIdReader struct{}
 
@@ -10,7 +14,7 @@ func NewIntIdReader() *IntIdReader {
 	return this
 }
 
-func (this IntIdReader) Read(paramProvider ParamProvider) int {
+func (this IntIdReader) Read(paramProvider firead.ParamProvider) int {
 	id := paramProvider.Param("id")
 
 	idAsInt, _ := strconv.Atoi(id)
