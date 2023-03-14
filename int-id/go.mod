@@ -2,11 +2,9 @@ module github.com/jonnyorman/firead/int-id
 
 go 1.20
 
-replace github.com/jonnyorman/firead => ../
-
 require (
 	cloud.google.com/go/firestore v1.9.0
-	github.com/jonnyorman/firead v0.0.0-00010101000000-000000000000
+	github.com/jonnyorman/firead v0.1.2-0.20230313212031-30fc0ef6938c
 	github.com/jonnyorman/fireworks v0.1.1
 	github.com/stretchr/testify v1.8.2
 )
