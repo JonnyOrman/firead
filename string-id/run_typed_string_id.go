@@ -6,11 +6,11 @@ import (
 )
 
 func RunTypedStringId[TDocument any]() {
-	idReader := StringIdReader{}
+	idReader := NewStringIdReader()
 
 	configuration := fireworks.GenerateConfiguration("firead-config")
 
-	snapshotRetriever := NewStringIdSnapshotRetriever(configuration)
+	snapshotRetriever := firead.NewIdSnapshotRetriever()
 
 	firead.RunTyped[TDocument, string](
 		idReader,

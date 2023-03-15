@@ -1,31 +1,28 @@
 package intid
 
 import (
-	"context"
 	"strconv"
 
 	"cloud.google.com/go/firestore"
-	"github.com/jonnyorman/fireworks"
+	"github.com/jonnyorman/firead"
 )
 
 type IntIdSnapshotRetriever struct {
-	configuration fireworks.Configuration
+	snapshotRetriever firead.SnapshotRetriever[string]
 }
 
-func NewIntIdSnapshotRetriever(configuration fireworks.Configuration) *IntIdSnapshotRetriever {
+func NewIntIdSnapshotRetriever(
+	snapshotRetriever firead.SnapshotRetriever[string],
+) *IntIdSnapshotRetriever {
 	this := new(IntIdSnapshotRetriever)
 
-	this.configuration = configuration
+	this.snapshotRetriever = snapshotRetriever
 
 	return this
 }
 
 func (this IntIdSnapshotRetriever) Retrieve(collection *firestore.CollectionRef, id int) *firestore.DocumentSnapshot {
-	ctx := context.Background()
+	stringId := strconv.Itoa(id)
 
-	idString := strconv.Itoa(id)
-
-	snapshot, _ := collection.Doc(idString).Get(ctx)
-
-	return snapshot
+	return this.snapshotRetriever.Retrieve(collection, stringId)
 }
