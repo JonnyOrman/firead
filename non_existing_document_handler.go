@@ -9,5 +9,5 @@ func NewNonExistingDocumentHandler() *NonExistingDocumentHandler {
 }
 
 func (this NonExistingDocumentHandler) Handle() (int, any) {
-	return 404, make(map[string]interface{})
+	return 404, nil
 }
