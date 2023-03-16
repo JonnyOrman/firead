@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  firebase-emulator:
+    build:
+      context: ../../firebase-emulator
+      args:
+        - PROJECT=firead-string-id-integration-tests
+    environment:
+      PROJECT: firead-string-id-integration-tests
+    ports:
+      - "4000:4000"
+      - "8080:8080"
+  firead-string-id-app:
+    build:
+      context: ../../
+      dockerfile: ./string-id/integration/Dockerfile
+    environment:
+      PORT: 3001
+      PROJECT: firead-string-id-integration-tests
+      PROJECT_ID: firead-string-id-integration-tests
+      COLLECTION_NAME: TestCollection
+      FIRESTORE_EMULATOR_HOST: firebase-emulator:8080
+    ports:
+      - "3001:3001"
+    depends_on:
+      - firebase-emulator
