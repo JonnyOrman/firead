@@ -24,3 +24,13 @@ services:
       - "3001:3001"
     depends_on:
       - firebase-emulator
+  firead-string-string-app-tests:
+    build:
+      context: ../../
+      dockerfile: ./string-id/integration/tests/Dockerfile
+    environment:
+      PROJECT: firead-string-id-integration-tests
+      FIRESTORE_EMULATOR_HOST: firebase-emulator:8080
+      FIREAD_STRING_ID_APP_URL: http://firead-string-id-app:3001
+    depends_on:
+      - firead-string-id-app

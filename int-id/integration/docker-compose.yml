@@ -24,3 +24,13 @@ services:
       - "3001:3001"
     depends_on:
       - firebase-emulator
+  firead-int-id-app-tests:
+    build:
+      context: ../../
+      dockerfile: ./int-id/integration/tests/Dockerfile
+    environment:
+      PROJECT: firead-int-id-integration-tests
+      PROJECT_ID: firead-int-id-integration-tests
+      FIRESTORE_EMULATOR_HOST: firebase-emulator:8080
+    depends_on:
+      - firead-int-id-app
