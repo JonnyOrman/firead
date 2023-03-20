@@ -1,12 +1,12 @@
-module github.com/jonnyorman/firead/string-id/integration
+module github.com/jonnyorman/firead/int-id/integration-untyped
 
 go 1.20
 
 replace github.com/jonnyorman/firead => ../../
 
-replace github.com/jonnyorman/firead/string-id => ../
+replace github.com/jonnyorman/firead/int-id => ../
 
-require github.com/jonnyorman/firead/string-id v0.0.0-00010101000000-000000000000
+require github.com/jonnyorman/firead/int-id v0.0.0-00010101000000-000000000000
 
 require (
 	cloud.google.com/go v0.110.0 // indirect

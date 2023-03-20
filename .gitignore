@@ -7,11 +7,13 @@
 !docker-compose.yml
 !README.md
 !Dockerfile
+!Dockerfile.*
 !.dockerignore
 !firebase.json
 !*.md
 !.releaserc
 !.github
 !LICENSE
+!Makefile
 
 !*/

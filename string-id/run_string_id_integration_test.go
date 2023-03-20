@@ -1,3 +1,6 @@
+//go:build integration
+// +build integration
+
 package stringid
 
 import (
@@ -15,7 +18,7 @@ import (
 
 var project = os.Getenv("PROJECT")
 var firebaseEmulatorHost = os.Getenv("FIRESTORE_EMULATOR_HOST")
-var fireadStringIdAppUrl = os.Getenv("FIREAD_STRING_ID_APP_URL")
+var appUrl = os.Getenv("APP_URL")
 
 func TestMain(m *testing.M) {
 	ctx := context.Background()
@@ -27,8 +30,8 @@ func TestMain(m *testing.M) {
 	collection := client.Collection("TestCollection")
 
 	data := make(map[string]interface{})
-	data["prop1"] = "val1"
-	//data["prop2"] = 456
+	data["prop1"] = "def"
+	data["prop2"] = 456
 
 	collection.Doc("abc").Set(ctx, data)
 
@@ -41,7 +44,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestDocumentExists(t *testing.T) {
-	url := fmt.Sprintf("http://firead-string-id-app:3001/%s", "abc")
+	url := fmt.Sprintf("%s/%s", appUrl, "abc")
 
 	resp, _ := http.Get(url)
 
@@ -51,14 +54,17 @@ func TestDocumentExists(t *testing.T) {
 	var m map[string]interface{}
 	json.Unmarshal(body, &m)
 
-	assert.Equal(t, 200, resp.StatusCode)
-	assert.Equal(t, "val1", m["prop1"])
-	//assert.Equal(t, 456, m["prop2"])
+	expectedCode := 200
+	expectedProp1 := "def"
+	expectedProp2 := float64(456)
+
+	assert.Equal(t, expectedCode, resp.StatusCode)
+	assert.Equal(t, expectedProp1, m["prop1"])
+	assert.Equal(t, expectedProp2, m["prop2"])
 }
 
 func TestDocumentDoesNotExist(t *testing.T) {
-	url := fmt.Sprintf("%s/%s", fireadStringIdAppUrl, "456")
-	fmt.Printf("URL: %s", url)
+	url := fmt.Sprintf("%s/%s", appUrl, "ghi")
 
 	resp, _ := http.Get(url)
 
@@ -68,6 +74,9 @@ func TestDocumentDoesNotExist(t *testing.T) {
 	var m map[string]interface{}
 	json.Unmarshal(body, &m)
 
-	//assert.Equal(t, 404, resp.StatusCode)
-	//assert.Equal(t, nil, m)
+	expectedCode := 404
+	var expectedBody map[string]interface{}
+
+	assert.Equal(t, expectedCode, resp.StatusCode)
+	assert.Equal(t, expectedBody, m)
 }

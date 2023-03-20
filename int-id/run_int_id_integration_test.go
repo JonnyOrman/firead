@@ -1,3 +1,6 @@
+//go:build integration
+// +build integration
+
 package intid
 
 import (
@@ -5,7 +8,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"testing"
 
@@ -14,80 +16,67 @@ import (
 	"net/http"
 )
 
-func TestMain(m *testing.M) {
-	os.Setenv("FIRESTORE_EMULATOR_HOST", "firebase-emulator:8080")
-	os.Setenv("PROJECT", "firead-int-id-integration-tests")
-	os.Setenv("PROJECT_ID", "firead-int-id-integration-tests")
+var project = os.Getenv("PROJECT")
+var firebaseEmulatorHost = os.Getenv("FIRESTORE_EMULATOR_HOST")
+var appUrl = os.Getenv("APP_URL")
 
+func TestMain(m *testing.M) {
 	ctx := context.Background()
 
-	client, err := firestore.NewClient(ctx, "firead-int-id-integration-tests")
-	if err != nil {
-		log.Fatalf("firebase.NewClient err: %v", err)
-	}
+	client, _ := firestore.NewClient(ctx, project)
 
 	defer client.Close()
 
 	collection := client.Collection("TestCollection")
 
 	data := make(map[string]interface{})
-	data["prop1"] = "val1"
+	data["prop1"] = "def"
 	data["prop2"] = 456
 
 	collection.Doc("123").Set(ctx, data)
 
 	m.Run()
 
-	req, _ := http.NewRequest(http.MethodDelete, "http://firebase-emulator:8080/emulator/v1/projects/firead-int-id-integration-tests/databases/(default)/documents", nil)
+	documentsUrl := fmt.Sprintf("http://%s/emulator/v1/projects/%s/databases/(default)/documents", firebaseEmulatorHost, project)
+	req, _ := http.NewRequest(http.MethodDelete, documentsUrl, nil)
 	deleteClient := &http.Client{}
 	deleteClient.Do(req)
 }
 
 func TestDocumentExists(t *testing.T) {
-	url := fmt.Sprintf("http://firead-int-id-app:3001/%s", "123")
-	fmt.Printf("URL: %s", url)
+	url := fmt.Sprintf("%s/%s", appUrl, "123")
 
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Printf("error making http request: %s\n", err)
-	}
+	resp, _ := http.Get(url)
 
 	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Printf("Error reading body: %s\n", err)
-	}
-
-	log.Printf("RESP BODY: %s", body)
+	body, _ := io.ReadAll(resp.Body)
 
 	var m map[string]interface{}
 	json.Unmarshal(body, &m)
 
-	assert.Equal(t, 200, resp.StatusCode)
-	assert.Equal(t, "val1", m["prop1"])
-	//assert.Equal(t, 456, m["prop2"])
+	expectedCode := 200
+	expectedProp1 := "def"
+	expectedProp2 := float64(456)
+
+	assert.Equal(t, expectedCode, resp.StatusCode)
+	assert.Equal(t, expectedProp1, m["prop1"])
+	assert.Equal(t, expectedProp2, m["prop2"])
 }
 
 func TestDocumentDoesNotExist(t *testing.T) {
-	url := fmt.Sprintf("http://firead-int-id-app:3001/%s", "456")
-	fmt.Printf("URL: %s", url)
+	url := fmt.Sprintf("%s/%s", appUrl, "789")
 
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Printf("error making http request: %s\n", err)
-	}
+	resp, _ := http.Get(url)
 
 	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Printf("Error reading body: %s\n", err)
-	}
-
-	log.Printf("RESP BODY: %s", body)
+	body, _ := io.ReadAll(resp.Body)
 
 	var m map[string]interface{}
 	json.Unmarshal(body, &m)
 
-	//assert.Equal(t, 404, resp.StatusCode)
-	//assert.Equal(t, nil, m)
+	expectedCode := 404
+	var expectedBody map[string]interface{}
+
+	assert.Equal(t, expectedCode, resp.StatusCode)
+	assert.Equal(t, expectedBody, m)
 }

@@ -39,7 +39,7 @@ func (this DocumentResponseResolver[TId]) Resolve(id TId) (int, any) {
 
 	snapshot := this.snapshotRetriever.Retrieve(collection, id)
 
-	if snapshot != nil {
+	if snapshot.Exists() {
 		return this.existingDocumentDataHandler.Handle(snapshot.Data())
 	} else {
 		return this.nonExistingDocumentHandler.Handle()

@@ -1,4 +1,4 @@
-module github.com/jonnyorman/firead/int-id/integration
+module github.com/jonnyorman/firead/int-id/integration-typed
 
 go 1.20
 
