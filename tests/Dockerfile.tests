@@ -1,0 +1,12 @@
+ARG GO_VERSION
+
+FROM golang:${GO_VERSION}-alpine AS builder
+
+ARG ID_TYPE
+
+RUN apk update && apk add alpine-sdk git && rm -rf /var/cache/apk/*
+COPY . /firead
+WORKDIR /firead/${ID_TYPE}-id
+RUN go mod download
+EXPOSE 8080
+CMD ["go", "test", "--tags=integration"]

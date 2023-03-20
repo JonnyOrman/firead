@@ -4,15 +4,34 @@ import "github.com/jonnyorman/fireworks"
 
 func BuildApplication[TDocument any, TId Id](
 	idReader ParamReader[TId],
-	dataRetriever DataRetriever[TId]) *fireworks.Application {
-	documentReader := NewFirestoreDocumentReader[TDocument](dataRetriever)
+	snapshotRetriever SnapshotRetriever[TId],
+	configuration *fireworks.Configuration,
+) *fireworks.Application {
+	dataDecoder := NewMapStructureDataDecoder[TDocument]()
+
+	decodedDataHandler := NewDecodedDataHandler[TDocument]()
+
+	existingDocumentDataHandler := NewExistingDocumentDataHandler[TDocument](
+		dataDecoder,
+		decodedDataHandler,
+	)
+
+	nonExistingDocumentHandler := NewNonExistingDocumentHandler()
+
+	responseResolver := NewDocumentResponseResolver(
+		configuration,
+		snapshotRetriever,
+		existingDocumentDataHandler,
+		nonExistingDocumentHandler,
+	)
 
 	responseWriter := NewJsonResponseWriter()
 
 	requestHandler := NewDocumentRequestHandler[TDocument, TId](
 		idReader,
-		documentReader,
-		responseWriter)
+		responseResolver,
+		responseWriter,
+	)
 
 	routerBuilder := fireworks.NewGinRouterBuilder()
 

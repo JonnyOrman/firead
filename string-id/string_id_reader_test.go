@@ -1,10 +1,20 @@
-package firead
+package stringid
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
+
+type ParamProviderMock struct {
+	mock.Mock
+}
+
+func (this ParamProviderMock) Param(key string) string {
+	args := this.Called(key)
+	return args.Get(0).(string)
+}
 
 func TestStringIdReaderRead(t *testing.T) {
 	id := "abc"

@@ -1,5 +1,5 @@
 package firead
 
-type ParamReader[T any] interface {
+type ParamReader[T Id] interface {
 	Read(paramProvider ParamProvider) T
 }

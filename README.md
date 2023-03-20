@@ -95,3 +95,11 @@ If a configuration value is provided in both `firead-config.json` and the enviro
 }
 ```
 then the project ID will be "config-project-id".
+
+## Running integration tests
+
+To run integration tests in Docker against a local Firebase emulator, run the following:
+- For typed documents with `int` IDs: `make test-firead-int-id-typed`
+- For untyped documents with `int` IDs: `make test-firead-int-id-untyped`
+- For typed documents with `string` IDs: `make test-firead-string-id-typed`
+- For untyped documents with `string` IDs: `make test-firead-string-id-untyped`
