@@ -1,6 +1,10 @@
 package firead
 
-import "github.com/jonnyorman/fireworks"
+import (
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+	"github.com/jonnyorman/fireworks"
+)
 
 func BuildApplication[TDocument any, TId Id](
 	idReader ParamReader[TId],
@@ -33,11 +37,11 @@ func BuildApplication[TDocument any, TId Id](
 		responseWriter,
 	)
 
-	routerBuilder := fireworks.NewGinRouterBuilder()
+	router := gin.Default()
 
-	routerBuilder.AddGet("/:id", requestHandler.Handle)
+	router.Use(cors.Default())
 
-	router := routerBuilder.Build()
+	router.GET("/:id", requestHandler.Handle)
 
 	application := fireworks.NewApplication(router)
 

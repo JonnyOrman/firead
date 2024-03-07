@@ -2,10 +2,9 @@ module github.com/jonnyorman/firead/string-id
 
 go 1.20
 
-replace github.com/jonnyorman/firead => ../
-
 require (
-	github.com/jonnyorman/firead v0.1.2-0.20230313212031-30fc0ef6938c
+	cloud.google.com/go/firestore v1.9.0
+	github.com/jonnyorman/firead v0.1.2-0.20240307084435-4b19e626a94f
 	github.com/jonnyorman/fireworks v0.1.1
 	github.com/stretchr/testify v1.8.2
 )
@@ -14,13 +13,13 @@ require (
 	cloud.google.com/go v0.110.0 // indirect
 	cloud.google.com/go/compute v1.18.0 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
-	cloud.google.com/go/firestore v1.9.0 // indirect
 	cloud.google.com/go/iam v0.12.0 // indirect
 	cloud.google.com/go/longrunning v0.4.1 // indirect
 	cloud.google.com/go/pubsub v1.28.0 // indirect
 	github.com/bytedance/sonic v1.8.3 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/gin-contrib/cors v1.4.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/gin-gonic/gin v1.9.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
