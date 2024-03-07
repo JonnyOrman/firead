@@ -5,7 +5,7 @@ import (
 	"github.com/jonnyorman/fireworks"
 )
 
-func RunMappedIntId[TDocument any, TResponse any](dataMapper DataMapper[TDocument, TResponse]) {
+func RunMappedIntId[TDocument any, TResponse any](dataMapper firead.DataMapper[TDocument, TResponse]) {
 	idReader := NewIntIdReader()
 
 	configuration := fireworks.GenerateConfiguration("firead-config")
@@ -17,6 +17,7 @@ func RunMappedIntId[TDocument any, TResponse any](dataMapper DataMapper[TDocumen
 	firead.RunMapped[TDocument, TResponse, int](
 		idReader,
 		snapshotRetriever,
+		dataMapper,
 		&configuration,
 	)
 }

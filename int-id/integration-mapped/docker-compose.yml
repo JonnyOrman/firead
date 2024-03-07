@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  firebase-emulator:
+    build:
+      context: ../../tests/firebase-emulator
+      args:
+        - PROJECT=firead-int-id-typed-integration-tests
+    environment:
+      PROJECT: firead-int-id-typed-integration-tests
+    ports:
+      - "4000:4000"
+      - "8080:8080"
+  firead-int-id-typed-app:
+    build:
+      context: ../../
+      dockerfile: ./tests/Dockerfile.app
+      args:
+        - GO_VERSION=1.20
+        - ID_TYPE=int
+        - APP_TYPE=typed
+    environment:
+      PORT: 3001
+      PROJECT: firead-int-id-typed-integration-tests
+      PROJECT_ID: firead-int-id-typed-integration-tests
+      COLLECTION_NAME: TestCollection
+      FIRESTORE_EMULATOR_HOST: firebase-emulator:8080
+    ports:
+      - "3001:3001"
+    depends_on:
+      - firebase-emulator
+  firead-int-id-typed-app-tests:
+    build:
+      context: ../../
+      dockerfile: ./tests/Dockerfile.tests
+      args:
+        - GO_VERSION=1.20
+        - ID_TYPE=int
+        - APP_TYPE=typed
+    environment:
+      PROJECT: firead-int-id-typed-integration-tests
+      FIRESTORE_EMULATOR_HOST: firebase-emulator:8080
+      APP_URL: http://firead-int-id-typed-app:3001
+    depends_on:
+      - firead-int-id-typed-app
