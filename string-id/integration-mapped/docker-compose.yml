@@ -4,41 +4,41 @@ services:
     build:
       context: ../../tests/firebase-emulator
       args:
-        - PROJECT=firead-string-id-untyped-integration-tests
+        - PROJECT=firead-string-id-mapped-integration-tests
     environment:
-      PROJECT: firead-string-id-untyped-integration-tests
+      PROJECT: firead-string-id-mapped-integration-tests
     ports:
       - "4000:4000"
       - "8080:8080"
-  firead-string-id-untyped-app:
+  firead-string-id-mapped-app:
     build:
       context: ../../
       dockerfile: ./tests/Dockerfile.app
       args:
         - GO_VERSION=1.20
         - ID_TYPE=int
-        - APP_TYPE=untyped
+        - APP_TYPE=mapped
     environment:
       PORT: 3001
-      PROJECT: firead-string-id-untyped-integration-tests
-      PROJECT_ID: firead-string-id-untyped-integration-tests
+      PROJECT: firead-string-id-mapped-integration-tests
+      PROJECT_ID: firead-string-id-mapped-integration-tests
       COLLECTION_NAME: TestCollection
       FIRESTORE_EMULATOR_HOST: firebase-emulator:8080
     ports:
       - "3001:3001"
     depends_on:
       - firebase-emulator
-  firead-string-id-untyped-app-tests:
+  firead-string-id-mapped-app-tests:
     build:
       context: ../../
       dockerfile: ./tests/Dockerfile.tests
       args:
         - GO_VERSION=1.20
         - ID_TYPE=int
-        - APP_TYPE=untyped
+        - APP_TYPE=mapped
     environment:
-      PROJECT: firead-string-id-untyped-integration-tests
+      PROJECT: firead-string-id-mapped-integration-tests
       FIRESTORE_EMULATOR_HOST: firebase-emulator:8080
-      APP_URL: http://firead-string-id-untyped-app:3001
+      APP_URL: http://firead-string-id-mapped-app:3001
     depends_on:
-      - firead-string-id-untyped-app
+      - firead-string-id-mapped-app
