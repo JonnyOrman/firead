@@ -1,24 +1,23 @@
-module github.com/jonnyorman/firead/string-id
+module github.com/jonnyorman/firead/int-id/integration-mapped
 
 go 1.20
 
-require (
-	cloud.google.com/go/firestore v1.9.0
-	github.com/jonnyorman/firead v0.1.3-0.20240307110624-90ebfe20ecba
-	github.com/jonnyorman/fireworks v0.1.1
-	github.com/stretchr/testify v1.8.2
-)
+replace github.com/jonnyorman/firead => ../../
+
+replace github.com/jonnyorman/firead/int-id => ../
+
+require github.com/jonnyorman/firead/int-id v0.0.0-00010101000000-000000000000
 
 require (
 	cloud.google.com/go v0.110.0 // indirect
 	cloud.google.com/go/compute v1.18.0 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
+	cloud.google.com/go/firestore v1.9.0 // indirect
 	cloud.google.com/go/iam v0.12.0 // indirect
 	cloud.google.com/go/longrunning v0.4.1 // indirect
 	cloud.google.com/go/pubsub v1.28.0 // indirect
 	github.com/bytedance/sonic v1.8.3 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
-	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/gin-contrib/cors v1.4.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/gin-gonic/gin v1.9.0 // indirect
@@ -31,6 +30,8 @@ require (
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.2.3 // indirect
 	github.com/googleapis/gax-go/v2 v2.7.0 // indirect
+	github.com/jonnyorman/firead v0.1.3-0.20240307110624-90ebfe20ecba // indirect
+	github.com/jonnyorman/fireworks v0.1.1 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
 	github.com/leodido/go-urn v1.2.2 // indirect
@@ -39,8 +40,6 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.7 // indirect
-	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/stretchr/objx v0.5.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	go.opencensus.io v0.24.0 // indirect

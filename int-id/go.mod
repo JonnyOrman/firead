@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	cloud.google.com/go/firestore v1.9.0
-	github.com/jonnyorman/firead v0.1.2
+	github.com/jonnyorman/firead v0.1.3-0.20240307110624-90ebfe20ecba
 	github.com/jonnyorman/fireworks v0.1.1
 	github.com/stretchr/testify v1.8.2
 )
