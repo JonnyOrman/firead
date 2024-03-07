@@ -6,7 +6,7 @@ replace github.com/jonnyorman/firead => ../
 
 require (
 	cloud.google.com/go/firestore v1.9.0
-	github.com/jonnyorman/firead v0.1.2-0.20230313212031-30fc0ef6938c
+	github.com/jonnyorman/firead v0.1.2-0.20240307084435-4b19e626a94f
 	github.com/jonnyorman/fireworks v0.1.1
 	github.com/stretchr/testify v1.8.2
 )
@@ -21,6 +21,7 @@ require (
 	github.com/bytedance/sonic v1.8.3 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/gin-contrib/cors v1.4.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/gin-gonic/gin v1.9.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
