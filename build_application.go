@@ -37,12 +37,6 @@ func BuildApplication[TDocument any, TId Id](
 		responseWriter,
 	)
 
-	// routerBuilder := fireworks.NewGinRouterBuilder()
-
-	// routerBuilder.AddGet("/:id", requestHandler.Handle)
-
-	// router := routerBuilder.Build()
-
 	router := gin.Default()
 
 	router.Use(cors.Default())
